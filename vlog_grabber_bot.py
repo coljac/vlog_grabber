@@ -2,7 +2,6 @@ import discord
 import os
 import sys
 
-TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 options = {"notify": False}
@@ -34,6 +33,12 @@ def printhelp():
 
 
 def main():
+    if "DISCORD_TOKEN" not in os.environ:
+        print("Supply token in environment variable DISCORD_TOKEN")
+        return
+
+    token = os.getenv('DISCORD_TOKEN')
+
     if len(sys.argv) < 2:
         printhelp()
         return
@@ -52,7 +57,7 @@ def main():
         print(f"Error: Save path {options['savedir']} does not exist.")
         return
 
-    client.run(TOKEN)
+    client.run(token)
 
 if __name__ == "__main__":
     main()
